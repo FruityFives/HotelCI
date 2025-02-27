@@ -48,14 +48,22 @@ namespace TestHotelController
         {
 
 
-            // Act
+// Arrange (Forberedelse)
+        var repository = new HotelRepository(); // Opret en instans af HotelRepository (den rigtige repository med hardcodet data)
+        var controller = new HotelsController(repository); // Opret en instans af HotelsController og send repository med
 
+        // Act (Handling)
+        var result = controller.Get(); // Kald Get-metoden på controlleren
 
-            // arrange
+        // Assert (Verifikation)
+        var okResult = result as OkObjectResult; // Cast resultatet til OkObjectResult
+        Assert.IsNotNull(okResult); // Bekræft at resultatet ikke er null
 
+        var returnedHotels = okResult.Value as List<Hotel>; // Cast værdien til List<Hotel>
+        Assert.IsNotNull(returnedHotels); // Bekræft at den returnerede data ikke er null
 
-
-            // Assert
+        // Bekræft at antallet af returnerede hoteller matcher forventningen (4 i dette tilfælde)
+        Assert.AreEqual(4, returnedHotels.Count); // Antag at repository indeholder 4 hoteller
         }
 
         [TestMethod]
