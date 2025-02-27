@@ -80,15 +80,14 @@ namespace TestHotelController
         public void GetById_ExistingIdPassed_ReturnsOkResult()
         {
 
+            // Arrange
+            int existingId = 1; // Vi ved, at ID 1 eksisterer
 
             // Act
-
-
-            // arrange
-
-
+            var result = _controller.Get(existingId);
 
             // Assert
+            Assert.AreEqual(typeof(OkObjectResult), result.GetType(), "Expected OkObjectResult but got a different response.");
 
         }
 
