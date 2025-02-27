@@ -105,35 +105,41 @@ namespace TestHotelController
         }
 
 
-        [TestMethod]
-        public void GetById_ExistingIdPassed_ReturnsRightHotel()
-        {
+      [TestMethod]
+public void GetById_ExistingIdPassed_ReturnsRightHotel()
+{
+    // Arrange
+    var testId = 1;
+    
+    // Act
+    var result = _controller.Get(testId) as OkObjectResult;
+    
+    // Assert
+    Assert.IsNotNull(result);
+    Assert.AreEqual(200, result.StatusCode);
 
-            // Act
-
-
-            // arrange
-
-
-
-            // Assert
-        }
-
-
-
-        [TestMethod]
-        public void Add_InvalidObjectPassed_ReturnsBadRequest()
-        {
-
-            // Act
-
-
-            // arrange
+    var hotel = result.Value as Hotel;
+    Assert.IsNotNull(hotel);
+    Assert.AreEqual(testId, hotel.HotelId);
+}
 
 
 
-            // Assert
-        }
+
+       [TestMethod]
+public void Add_InvalidObjectPassed_ReturnsBadRequest()
+{
+    // Arrange
+    var invalidHotel = new Hotel(); // Mangler obligatoriske felter som Name
+
+    // Act
+    var result = _controller.Post(invalidHotel) as BadRequestObjectResult;
+
+    // Assert
+    Assert.IsNotNull(result);
+    Assert.AreEqual(400, result.StatusCode);
+}
+
 
 
         [TestMethod]
