@@ -120,20 +120,23 @@ public void GetById_ExistingIdPassed_ReturnsRightHotel()
 
 
 
-
-       [TestMethod]
+[TestMethod]
 public void Add_InvalidObjectPassed_ReturnsBadRequest()
 {
     // Arrange
     var invalidHotel = new Hotel(); // Mangler obligatoriske felter som Name
 
+    // Manuelt tilføj en fejl til ModelState, så den bliver invalid
+    _controller.ModelState.AddModelError("Name", "Name is required");
+
     // Act
     var result = _controller.Post(invalidHotel) as BadRequestObjectResult;
 
     // Assert
-    Assert.IsNotNull(result);
-    Assert.AreEqual(400, result.StatusCode);
+    Assert.IsNotNull(result); // Sørger for, at resultatet ikke er null
+    Assert.AreEqual(400, result.StatusCode); // Bekræfter, at statuskoden er 400
 }
+
 
 
 
