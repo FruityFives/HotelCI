@@ -102,19 +102,20 @@ public void GetById_ExistingIdPassed_ReturnsRightHotel()
 
 
 
-        [TestMethod]
-        public void Add_InvalidObjectPassed_ReturnsBadRequest()
-        {
+       [TestMethod]
+public void Add_InvalidObjectPassed_ReturnsBadRequest()
+{
+    // Arrange
+    var invalidHotel = new Hotel(); // Mangler obligatoriske felter som Name
 
-            // Act
+    // Act
+    var result = _controller.Post(invalidHotel) as BadRequestObjectResult;
 
+    // Assert
+    Assert.IsNotNull(result);
+    Assert.AreEqual(400, result.StatusCode);
+}
 
-            // arrange
-
-
-
-            // Assert
-        }
 
 
         [TestMethod]
