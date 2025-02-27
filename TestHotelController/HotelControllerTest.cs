@@ -1,6 +1,8 @@
 using HotelWebAPI.Controllers;
 using HotelWebAPI.Data;
 using HotelWebAPI.Interfaces;
+using HotelWebAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TestHotelController
 {
@@ -115,17 +117,23 @@ namespace TestHotelController
         [TestMethod]
         public void Add_ValidObjectPassed_ReturnsCreatedResponse()
         {
+            // Arrange
+            var repository = new HotelRepository();  // Using the real repository
+            var controller = new HotelsController(repository);  // Passing the repository to the controller
+
+            var newHotel = new Hotel { HotelId = 5, Name = "New Hotel" };  // Create a new hotel object
 
             // Act
-
-
-            // arrange
-
-
+            var result = controller.Post(newHotel) as CreatedAtActionResult;  // Call the Post method of the controller
 
             // Assert
-
+            Assert.IsNotNull(result);  // Ensure the result is not null
+            Assert.AreEqual("Get", result.ActionName);  // Ensure the ActionName is "Get", indicating that it redirects to the Get method
+            Assert.AreEqual(newHotel.HotelId, ((Hotel)result.Value).HotelId);  // Ensure the returned hotel's ID is the same as the one we passed
+            Assert.AreEqual(newHotel.Name, ((Hotel)result.Value).Name);  // Ensure the returned hotel's Name is the same as the one we passed
         }
+
+
 
 
 
