@@ -3,13 +3,10 @@ using HotelWebAPI.Data;
 using HotelWebAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using HotelWebAPI.Interfaces;
-<<<<<<< HEAD
 using HotelWebAPI.Models;
 using Microsoft.AspNetCore.Mvc;
-=======
 using Microsoft.AspNetCore.Mvc;
 
->>>>>>> 7517b9b188346e72d5bceec8731b455b7f1819f9
 
 namespace TestHotelController
 {
