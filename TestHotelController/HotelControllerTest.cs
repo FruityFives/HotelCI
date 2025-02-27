@@ -1,6 +1,7 @@
 using HotelWebAPI.Controllers;
 using HotelWebAPI.Data;
 using HotelWebAPI.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TestHotelController
 {
@@ -142,24 +143,21 @@ namespace TestHotelController
 
             // Assert
         }
-
-
-
-            [TestMethod]
+[TestMethod]
     public void Remove_NotExistingIdPassed_ReturnsNotFoundResponse()
     {
         // Arrange
-        var repository = new HotelRepository(); // Brug den faktiske repository-implementering
+        var repository = new HotelRepository(); // Brug den rigtige repository-implementering
         var controller = new HotelsController(repository);
         int nonExistentId = 99; // Et ID, der ikke findes i listen
 
         // Act
-        var result = controller.Remove(nonExistentId);
+        var result = controller.Remove(nonExistentId) as StatusCodeResult;
 
         // Assert
-        Assert.IsInstanceOfType(result, typeof(NotFoundResult));
+        Assert.IsNotNull(result);
+        Assert.AreEqual(404, result.StatusCode); // 404 = NotFound
     }
-
 
         [TestMethod]
         public void Remove_ExistingIdPassed_ReturnsNoContentResult()
