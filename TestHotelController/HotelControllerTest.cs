@@ -1,6 +1,10 @@
 using HotelWebAPI.Controllers;
 using HotelWebAPI.Data;
+using HotelWebAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using HotelWebAPI.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace TestHotelController
 {
@@ -21,14 +25,19 @@ namespace TestHotelController
         public void Get_WhenCalled_ReturnsOkResult()
         {
 
-            // Act
+        // Arrange
+        var repository = new HotelRepository();
+        var controller = new HotelsController(repository);
 
+        // Act
+        var result = controller.Get();
 
-            // arrange
-
-
-
-            // Assert
+        // Assert
+        var okResult = result as OkObjectResult; // Cast the result to OkObjectResult
+        Assert.IsNotNull(okResult); // Verify the result is not null
+        var returnedHotels = okResult.Value as List<Hotel>; // Cast the value to List<Hotel>
+        Assert.IsNotNull(returnedHotels); // Verify the returned data is not null
+        Assert.AreEqual(4, returnedHotels.Count); // Verify the number of hotels returned
 
         }
 
@@ -39,14 +48,22 @@ namespace TestHotelController
         {
 
 
-            // Act
+// Arrange (Forberedelse)
+        var repository = new HotelRepository(); // Opret en instans af HotelRepository (den rigtige repository med hardcodet data)
+        var controller = new HotelsController(repository); // Opret en instans af HotelsController og send repository med
 
+        // Act (Handling)
+        var result = controller.Get(); // Kald Get-metoden på controlleren
 
-            // arrange
+        // Assert (Verifikation)
+        var okResult = result as OkObjectResult; // Cast resultatet til OkObjectResult
+        Assert.IsNotNull(okResult); // Bekræft at resultatet ikke er null
 
+        var returnedHotels = okResult.Value as List<Hotel>; // Cast værdien til List<Hotel>
+        Assert.IsNotNull(returnedHotels); // Bekræft at den returnerede data ikke er null
 
-
-            // Assert
+        // Bekræft at antallet af returnerede hoteller matcher forventningen (4 i dette tilfælde)
+        Assert.AreEqual(4, returnedHotels.Count); // Antag at repository indeholder 4 hoteller
         }
 
         [TestMethod]
@@ -54,13 +71,16 @@ namespace TestHotelController
         {
 
             // Act
+            int testId = 9999;
 
 
             // arrange
+            var result = _controller.Get(testId);
 
 
 
             // Assert
+             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
 
@@ -68,15 +88,14 @@ namespace TestHotelController
         public void GetById_ExistingIdPassed_ReturnsOkResult()
         {
 
+            // Arrange
+            int existingId = 1; // Vi ved, at ID 1 eksisterer
 
             // Act
-
-
-            // arrange
-
-
+            var result = _controller.Get(existingId);
 
             // Assert
+            Assert.AreEqual(typeof(OkObjectResult), result.GetType(), "Expected OkObjectResult but got a different response.");
 
         }
 
