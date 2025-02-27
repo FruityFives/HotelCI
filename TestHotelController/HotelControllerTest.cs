@@ -1,7 +1,10 @@
 using HotelWebAPI.Controllers;
 using HotelWebAPI.Data;
+using HotelWebAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using HotelWebAPI.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace TestHotelController
 {
@@ -22,14 +25,19 @@ namespace TestHotelController
         public void Get_WhenCalled_ReturnsOkResult()
         {
 
-            // Act
+        // Arrange
+        var repository = new HotelRepository();
+        var controller = new HotelsController(repository);
 
+        // Act
+        var result = controller.Get();
 
-            // arrange
-
-
-
-            // Assert
+        // Assert
+        var okResult = result as OkObjectResult; // Cast the result to OkObjectResult
+        Assert.IsNotNull(okResult); // Verify the result is not null
+        var returnedHotels = okResult.Value as List<Hotel>; // Cast the value to List<Hotel>
+        Assert.IsNotNull(returnedHotels); // Verify the returned data is not null
+        Assert.AreEqual(4, returnedHotels.Count); // Verify the number of hotels returned
 
         }
 
