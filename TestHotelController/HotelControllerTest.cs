@@ -145,23 +145,21 @@ namespace TestHotelController
 
             // Assert
         }
+[TestMethod]
+    public void Remove_NotExistingIdPassed_ReturnsNotFoundResponse()
+    {
+        // Arrange
+        var repository = new HotelRepository(); // Brug den rigtige repository-implementering
+        var controller = new HotelsController(repository);
+        int nonExistentId = 99; // Et ID, der ikke findes i listen
 
+        // Act
+        var result = controller.Remove(nonExistentId) as StatusCodeResult;
 
-
-        [TestMethod]
-        public void Remove_NotExistingIdPassed_ReturnsNotFoundResponse()
-        {
-
-            // Act
-
-
-            // arrange
-
-
-
-            // Assert
-        }
-
+        // Assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual(404, result.StatusCode); // 404 = NotFound
+    }
 
         [TestMethod]
         public void Remove_ExistingIdPassed_ReturnsNoContentResult()
