@@ -81,19 +81,24 @@ namespace TestHotelController
         }
 
 
-        [TestMethod]
-        public void GetById_ExistingIdPassed_ReturnsRightHotel()
-        {
+      [TestMethod]
+public void GetById_ExistingIdPassed_ReturnsRightHotel()
+{
+    // Arrange
+    var testId = 1;
+    
+    // Act
+    var result = _controller.Get(testId) as OkObjectResult;
+    
+    // Assert
+    Assert.IsNotNull(result);
+    Assert.AreEqual(200, result.StatusCode);
 
-            // Act
+    var hotel = result.Value as Hotel;
+    Assert.IsNotNull(hotel);
+    Assert.AreEqual(testId, hotel.HotelId);
+}
 
-
-            // arrange
-
-
-
-            // Assert
-        }
 
 
 
