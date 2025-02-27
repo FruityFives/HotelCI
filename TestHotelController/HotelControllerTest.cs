@@ -145,19 +145,20 @@ namespace TestHotelController
 
 
 
-        [TestMethod]
-        public void Remove_NotExistingIdPassed_ReturnsNotFoundResponse()
-        {
+            [TestMethod]
+    public void Remove_NotExistingIdPassed_ReturnsNotFoundResponse()
+    {
+        // Arrange
+        var repository = new HotelRepository(); // Brug den faktiske repository-implementering
+        var controller = new HotelsController(repository);
+        int nonExistentId = 99; // Et ID, der ikke findes i listen
 
-            // Act
+        // Act
+        var result = controller.Remove(nonExistentId);
 
-
-            // arrange
-
-
-
-            // Assert
-        }
+        // Assert
+        Assert.IsInstanceOfType(result, typeof(NotFoundResult));
+    }
 
 
         [TestMethod]
