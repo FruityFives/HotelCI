@@ -164,14 +164,22 @@ public void Add_InvalidObjectPassed_ReturnsBadRequest()
         public void Add_ValidObjectPassed_ReturnedResponseHasCreatedItem()
         {
 
+            // Arrange
+            var repository = new HotelRepository(); // Antager, at du har en HotelRepository
+            var controller = new HotelsController(repository); // Opret controller med repository
+            var newHotel = new Hotel { HotelId = 1, Name = "Test Hotel" };
             // Act
-
-
-            // arrange
-
-
+            var result = controller.Post(newHotel) as CreatedAtActionResult; // Kalder Post-metoden på controlleren
 
             // Assert
+            Assert.IsNotNull(result); // Bekræft, at resultatet ikke er null
+            Assert.AreEqual("Get", result.ActionName); // Bekræft, at ActionName er "Get"
+            Assert.IsNotNull(result.Value); // Bekræft, at result.Value ikke er null
+
+            var createdHotel = result.Value as Hotel; // Cast result.Value til Hotel
+            Assert.IsNotNull(createdHotel); // Bekræft, at castet er succesfuldt
+            Assert.AreEqual(newHotel.HotelId, createdHotel.HotelId); // Bekræft, at HotelId matcher
+            Assert.AreEqual(newHotel.Name, createdHotel.Name); // Bekræft, at Name matcher
         }
 
 
