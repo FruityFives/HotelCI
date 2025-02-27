@@ -1,6 +1,7 @@
 using HotelWebAPI.Controllers;
 using HotelWebAPI.Data;
 using HotelWebAPI.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TestHotelController
 {
@@ -54,13 +55,16 @@ namespace TestHotelController
         {
 
             // Act
+            int testId = 9999;
 
 
             // arrange
+            var result = _controller.Get(testId);
 
 
 
             // Assert
+             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
 
