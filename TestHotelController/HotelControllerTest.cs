@@ -200,18 +200,21 @@ public void Add_InvalidObjectPassed_ReturnsBadRequest()
         Assert.AreEqual(404, result.StatusCode); // 404 = NotFound
     }
 
-        [TestMethod]
-        public void Remove_ExistingIdPassed_ReturnsNoContentResult()
-        {
+       [TestMethod]
+public void Remove_ExistingIdPassed_ReturnsNoContentResult()
+{
+    // Arrange
+    var repository = new HotelRepository(); // Brug den rigtige repository-implementering
+    var controller = new HotelsController(repository);
+    int existingId = 1; // Antager, at ID 1 eksisterer
 
-            // Act
+    // Act
+    var result = controller.Remove(existingId) as NoContentResult;
 
+    // Assert
+    Assert.IsNotNull(result);
+    Assert.AreEqual(204, result.StatusCode); // 204 = No Content
+}
 
-            // arrange
-
-
-
-            // Assert
-        }
     }
 }
